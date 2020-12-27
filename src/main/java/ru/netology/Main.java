@@ -26,22 +26,18 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        String rootDir = "D:\\Work\\Netology\\src\\javacore\\special_files\\src\\main\\java\\ru\\netology\\";
         String[] columnMapping = {"id", "firstName", "lastName", "country", "age"};
         // task1
-        List<Employee> employeeListFromCSV = parseCSV(columnMapping, rootDir.concat("data.csv"));
+        List<Employee> employeeListFromCSV = parseCSV(columnMapping, "data.csv");
         String json = listToJson(employeeListFromCSV);
-        writeString(json, rootDir, "data");
+        writeString(json, "data");
         // task2
-        List<Employee> employeeListFromXML = parseXML(rootDir.concat("data.xml"));
+        List<Employee> employeeListFromXML = parseXML("data.xml");
         String json2 = listToJson(employeeListFromXML);
-        writeString(json2, rootDir, "data2");
+        writeString(json2, "data2");
         // task3
-        List<Employee> employeeListFromJSON = parseJSON(rootDir.concat("data.json"));
-
-        for (Employee employee : employeeListFromJSON) {
-            System.out.println(employee);
-        }
+        List<Employee> employeeListFromJSON = parseJSON("data.json");
+        printList(employeeListFromJSON);
     }
 
     private static List<Employee> parseCSV(String[] columnMapping, String fileName) {
@@ -110,8 +106,8 @@ public class Main {
         return gson.toJson(employeeTypeList, listType);
     }
 
-    private static void writeString(String json, String rootDir, String fileName) {
-        try (FileWriter file = new FileWriter(rootDir.concat(fileName).concat(".json"))) {
+    private static void writeString(String json,  String fileName) {
+        try (FileWriter file = new FileWriter(fileName.concat(".json"))) {
             file.write((json));
             file.flush();
         } catch (IOException e) {
@@ -119,5 +115,10 @@ public class Main {
         }
     }
 
+    private static void printList(List<Employee> employeeListFromJSON) {
+        for (Employee employee : employeeListFromJSON) {
+            System.out.println(employee);
+        }
+    }
 
 }
